@@ -29,34 +29,40 @@
       <script src="js/directives.js"></script>
       <script src="js/services.js"></script>
 
-        <style type="text/css">
-      .platform-ios .manual-ios-statusbar-padding{
-        padding-top:20px;
-      }
-      .manual-remove-top-padding{
-        padding-top:0px; 
-      }
-      .manual-remove-top-padding .scroll{
-        padding-top:0px !important;
-      }
-      ion-list.manual-list-fullwidth div.list, .list.card.manual-card-fullwidth {
-        margin-left:-10px;
-        margin-right:-10px;
-      }
-      ion-list.manual-list-fullwidth div.list > .item, .list.card.manual-card-fullwidth > .item {
-        border-radius:0px;
-        border-left:0px;
-        border-right: 0px;
-      }
-      .show-list-numbers-and-dots ul{
-        list-style-type: disc;
-        padding-left:40px;
-      }
-      .show-list-numbers-and-dots ol{
-        list-style-type: decimal;
-        padding-left:40px;
-      }
-    </style>
+      <style type="text/css">
+          .platform-ios .manual-ios-statusbar-padding {
+              padding-top: 20px;
+          }
+
+          .manual-remove-top-padding {
+              padding-top: 0px;
+          }
+
+              .manual-remove-top-padding .scroll {
+                  padding-top: 0px !important;
+              }
+
+          ion-list.manual-list-fullwidth div.list, .list.card.manual-card-fullwidth {
+              margin-left: -10px;
+              margin-right: -10px;
+          }
+
+              ion-list.manual-list-fullwidth div.list > .item, .list.card.manual-card-fullwidth > .item {
+                  border-radius: 0px;
+                  border-left: 0px;
+                  border-right: 0px;
+              }
+
+          .show-list-numbers-and-dots ul {
+              list-style-type: disc;
+              padding-left: 40px;
+          }
+
+          .show-list-numbers-and-dots ol {
+              list-style-type: decimal;
+              padding-left: 40px;
+          }
+      </style>
   </head>
   <body ng-app="starter">
 
@@ -77,8 +83,11 @@
                   </ion-header-bar>
                   <ion-content ng-controller="menuCtrl" padding="false" class="side-menu-right has-header ">
                       <ion-list id="menu-list1" data-componentid="list1">
-                          <ion-item class="item-icon-left" id="menu-list-item1" data-componentid="list-item1">
-                              <i class="icon ion-happy-outline"></i>Tracking
+                          <ion-item class="item-icon-left" id="menu-list-item1" ui-sref="tabsController.addTrack" menu-close="" data-componentid="list-item1">
+                              <i class="icon ion-android-cart"></i>Add Track
+                          </ion-item>
+                          <ion-item class="item-icon-left" id="menu-list-item3" ui-sref="tabsController.trackTrace" menu-close="" data-componentid="list-item3">
+                              <i class="icon ion-android-boat"></i>Track &amp; Trace
                           </ion-item>
                           <ion-item class="item-icon-left" id="menu-list-item2" data-componentid="list-item2">
                               <i class="icon ion-android-settings"></i>Settings

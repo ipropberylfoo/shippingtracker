@@ -10,32 +10,28 @@
 
 
 
-        .state('tabsController.cameraTabDefaultPage', {
+        .state('cameraTabDefaultPage', {
             url: '/page2',
-            views: {
-                'tab1': {
-                    templateUrl: 'templates/cameraTabDefaultPage.html',
-                    controller: 'cameraTabDefaultPageCtrl'
-                }
-            }
+            templateUrl: 'templates/cameraTabDefaultPage.html',
+            controller: 'cameraTabDefaultPageCtrl'
         })
 
-    .state('tabsController.addTracking', {
+    .state('tabsController.addTrack', {
         url: '/page3',
         views: {
             'tab2': {
-                templateUrl: 'templates/addTracking.html',
-                controller: 'addTrackingCtrl'
+                templateUrl: 'templates/addTrack.html',
+                controller: 'addTrackCtrl'
             }
         }
     })
 
-    .state('tabsController.trackChecking', {
+    .state('tabsController.trackTrace', {
         url: '/page4',
         views: {
             'tab3': {
-                templateUrl: 'templates/trackChecking.html',
-                controller: 'trackCheckingCtrl'
+                templateUrl: 'templates/trackTrace.html',
+                controller: 'trackTraceCtrl'
             }
         }
     })
@@ -46,7 +42,7 @@
         abstract: true
     })
 
-    $urlRouterProvider.otherwise('/page1/page2')
+    $urlRouterProvider.otherwise('/page2')
 
 
 
