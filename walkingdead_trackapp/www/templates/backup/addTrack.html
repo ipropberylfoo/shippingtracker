@@ -1,0 +1,32 @@
+<ion-view title="Add Track" id="page3">
+  <ion-content padding="true" class="has-header">
+    <form id="addTrack-form2" class="list">
+      <label class="item item-input" id="addTrack-input3">
+        <span class="input-label">Track No</span>
+        <input type="text" placeholder="">
+      </label>
+        <label class="item item-input" id="addTrack-input4">
+            <span class="input-label">Remark</span>
+            <input type="text" placeholder="">
+        </label>
+    </form>
+    <form id="addTrack-form3" class="list">
+      <label class="item item-select" id="addTrack-select1">
+        <span class="input-label">Services</span>
+        <select>
+          <option>DHL</option>
+          <option>Pos Laju</option>
+        </select>
+      </label>
+    </form>
+      <form id="addTrack-form3" class="list" ng-controller="couriercontroller">
+          <label class="item item-select" id="addTrack-select2">
+              <span class="input-label">Services</span>
+              <select ng-repeat="courier in couriers">
+                  <option>courier.Title</option>
+              </select>
+          </label>
+      </form>
+    <button id="addTrack-button1" class="button button-positive  button-block">Add Tracking</button>
+  </ion-content>
+</ion-view>

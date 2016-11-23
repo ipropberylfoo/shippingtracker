@@ -1,4 +1,4 @@
-﻿angular.module('app.routes', [])
+﻿angular.module('app.routes', ['ionicUIRouter'])
 
 .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -10,20 +10,59 @@
 
 
 
-        .state('cameraTabDefaultPage', {
+        .state('trackDetail', {
             url: '/page2',
-            templateUrl: 'templates/cameraTabDefaultPage.html',
-            controller: 'cameraTabDefaultPageCtrl'
+            templateUrl: 'templates/trackDetail.html',
+            controller: 'trackDetailCtrl'
         })
 
+    /* 
+      The IonicUIRouter.js UI-Router Modification is being used for this route.
+      To navigate to this route, do NOT use a URL. Instead use one of the following:
+        1) Using the ui-sref HTML attribute:
+          ui-sref='tabsController.addTrack'
+        2) Using $state.go programatically:
+          $state.go('tabsController.addTrack');
+      This allows your app to figure out which Tab to open this page in on the fly.
+      If you're setting a Tabs default page or modifying the .otherwise for your app and
+      must use a URL, use one of the following:
+        /page1/tab2/page3
+        /page1/tab3/page3
+    */
     .state('tabsController.addTrack', {
         url: '/page3',
         views: {
             'tab2': {
                 templateUrl: 'templates/addTrack.html',
                 controller: 'addTrackCtrl'
+            },
+            'tab3': {
+                templateUrl: 'templates/addTrack.html',
+                controller: 'addTrackCtrl'
             }
         }
+    })
+
+    .state('editTrack', {
+        url: '/page5',
+        templateUrl: 'templates/editTrack.html',
+        controller: 'editTrackCtrl'
+    })
+
+    .state('tabsController.addCategory', {
+        url: '/page6',
+        views: {
+            'tab3': {
+                templateUrl: 'templates/addCategory.html',
+                controller: 'addCategoryCtrl'
+            }
+        }
+    })
+
+    .state('settings', {
+        url: '/page8',
+        templateUrl: 'templates/settings.html',
+        controller: 'settingsCtrl'
     })
 
     .state('tabsController.trackTrace', {
@@ -36,13 +75,19 @@
         }
     })
 
+    .state('archieved', {
+        url: '/page7',
+        templateUrl: 'templates/archieved.html',
+        controller: 'archievedCtrl'
+    })
+
     .state('tabsController', {
         url: '/page1',
         templateUrl: 'templates/tabsController.html',
         abstract: true
     })
 
-    $urlRouterProvider.otherwise('/page2')
+    $urlRouterProvider.otherwise('/page4')
 
 
 
