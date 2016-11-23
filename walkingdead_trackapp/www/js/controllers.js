@@ -51,10 +51,71 @@ function ($scope, $stateParams) {
     });    
 }])
 
-.controller('trackTraceCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('trackTraceCtrl', ['$scope', '$stateParams', '$http', '$filter', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $stateParams, $http, $filter) {
+    $scope.categories = [];
+    $scope.folders = [];
+    $scope.tracklist =
+        [{ "Id": "1", "Name": "LeeYin", "CompanyId": "1", "TrackNo": "E1234567890MY", "IsMuteProcess": "0", "TrackStatus": "Delivering", "FolderId": 1 },
+            { "Id": "2", "Name": "Kok Eng", "CompanyId": "1", "TrackNo": "E1234567890SG", "IsMuteProcess": "0", "TrackStatus": "Delivered", "FolderId": 1 },
+            { "Id": "3", "Name": "Ken Ken", "CompanyId": "2", "TrackNo": "E1234567890ID", "IsMuteProcess": "0", "TrackStatus": "Delivering", "FolderId": 2 },
+            { "Id": "4", "Name": "Beryl Foo", "CompanyId": "1", "TrackNo": "E1234567890FR", "IsMuteProcess": "0", "TrackStatus": "Delivering", "FolderId": 3 }
+        ];
+
+    $http({
+        method: 'GET', url: 'http://beta3.irealtor.api.iproperty.com.my/smarttrack/folders'
+    })
+   .success(function (response) {
+       $scope.folders = response;
+       console.log("$scope.folders :" + JSON.stringify($scope.folders));
+
+       for (var i = 0; i < $scope.folders.length; i++) {
+           var folderList = $filter('filter')($scope.tracklist, { FolderId: $scope.folders[i].Id }, true)
+
+           if (folderList != null) {
+               $scope.categories[i] = {
+                   name: $scope.folders[i].Name,
+                   items: []
+               };
+               for (var j = 0; j < folderList.length; j++) {
+                   $scope.categories[i].items.push(folderList[j]);
+                   console.log(JSON.stringify(folderList[j]));
+               }
+           }
+
+       }
+   }).error(function () {
+       alert('error smarttrack get folder')
+   })
+
+    // $http({
+    //     method: 'GET', url: 'http://beta3.irealtor.api.iproperty.com.my/smarttrack/tracks'
+    // })
+    //.success(function (response) {
+    //    $scope.folders = response;
+    //    console.log("$scope.folders :" + JSON.stringify($scope.folders));
+    //}).error(function () {
+    //    alert('error smarttrack get track lists')
+    //})
+
+
+
+    /*
+     * if given group is the selected group, deselect it
+     * else, select the given group
+     */
+    $scope.toggleGroup = function (group) {
+        if ($scope.isGroupShown(group)) {
+            $scope.shownGroup = null;
+        } else {
+            $scope.shownGroup = group;
+        }
+    };
+    $scope.isGroupShown = function (group) {
+        return $scope.shownGroup === group;
+    };
 
 
 }])
