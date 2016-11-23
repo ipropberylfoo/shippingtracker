@@ -44,7 +44,7 @@
     })
 
     .state('editTrack', {
-        url: '/page5',
+        url: '/page5/:id',
         templateUrl: 'templates/editTrack.html',
         controller: 'editTrackCtrl'
     })
@@ -60,7 +60,7 @@
     })
 
     .state('settings', {
-        url: '/page8',
+        url: '/settings',
         templateUrl: 'templates/settings.html',
         controller: 'settingsCtrl'
     })

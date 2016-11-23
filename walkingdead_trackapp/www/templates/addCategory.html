@@ -1,11 +1,11 @@
 <ion-view title="Add Category" id="page6">
   <ion-content padding="true" class="has-header">
-    <form id="addCategory-form11" class="list">
+    <form id="addCategory-form11" class="list" ng-controller="addCategoryCtrl">
       <label class="item item-input" id="addCategory-input10">
         <span class="input-label">Name</span>
-        <input type="text" placeholder="">
+        <input type="text" data-ng-model="form.name" placeholder="">
       </label>
-    </form>
-    <button id="addCategory-button3" class="button button-positive  button-block">Save Category</button>
+      <button id="addCategory-button3" type="submit" data-ng-click="create(form)" class="button button-positive  button-block">Save Category</button>
+    </form>    
   </ion-content>
 </ion-view>
