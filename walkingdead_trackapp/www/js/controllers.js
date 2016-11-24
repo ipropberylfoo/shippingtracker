@@ -12,11 +12,28 @@
 
 angular.module('app.controllers', [])
 
-.controller('trackDetailCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('trackDetailCtrl', ['$scope', '$http', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $http, $stateParams) {
+    $http({
+        method: "GET",
+        url: 'http://beta3.irealtor.api.iproperty.com.my/smarttrack/tracks/' + $stateParams.id + '/history',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' },
+    })
+        .success(function (response) {
+            $scope.form = response;          
+            console.log("$scope.form : " + JSON.stringify(response));
+        }).error(function (err) {
+            console.log("error: " + JSON.stringify(err));
+        });
 
+
+    $scope.rowClass = function(index) {
+        if (index === 0) {
+            return "myFirstClass";
+        }
+    }
 
 }])
 
@@ -129,7 +146,7 @@ function ($scope, $stateParams, $state, $q, $http, $filter) {
 
             if (folderList != null) {
                 $scope.categories[i] = {
-                    name: $scope.folders[i].Name,
+                    toggleGroup: $scope.folders[i].Name,
                     items: []
                 };
                 for (var j = 0; j < folderList.length; j++) {

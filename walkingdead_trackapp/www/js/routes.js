@@ -8,11 +8,15 @@
     // Each state's controller can be found in controllers.js
         $stateProvider
             .state('trackDetail', {
-                url: '/page2',
+                url: '/page2/:id',
                 templateUrl: 'templates/trackDetail.html',
                 controller: 'trackDetailCtrl'
             })
-
+           /* .state('trackDetail', {
+                url: '/page8/:id',
+                templateUrl: 'templates/trackDetail.html',
+                controller: 'trackDetailCtrl'
+            })*/
             /* 
       The IonicUIRouter.js UI-Router Modification is being used for this route.
       To navigate to this route, do NOT use a URL. Instead use one of the following:
@@ -77,7 +81,8 @@
                 url: '/page1',
                 templateUrl: 'templates/tabsController.html',
                 abstract: true
-    })
+            })
+            
 
     $urlRouterProvider.otherwise('/page4')
 
