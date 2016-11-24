@@ -24,6 +24,9 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "io.cordova.myappa69281"
+        },
+        "onesignal-cordova-plugin": {
+            "PACKAGE_NAME": "io.cordova.myappa69281"
         }
     },
     "dependent_plugins": {}

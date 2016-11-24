@@ -82,4 +82,5 @@
     <icon src="resources/windows/icon/wide310x150.scale-100.png" width="310" height="150" />
   </platform>
   <plugin name="cordova-plugin-inappbrowser" version="1.5.0" />
+  <plugin name="onesignal-cordova-plugin" />
 </widget>
