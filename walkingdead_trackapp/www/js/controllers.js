@@ -36,16 +36,22 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('addCategoryCtrl', ['$scope', '$stateParams', '$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('addCategoryCtrl', ['$scope', '$stateParams', '$state', '$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $state) {
+function ($scope, $stateParams, $state, $http) {
 
     $scope.create = function (form) {
         
-        $http.post('/smarttrack/folders', form).then(function (response) {
-            $state.go('tabsController.trackTrace');
-        })
+        $http({
+            method: "POST",
+            url: 'http://beta3.irealtor.api.iproperty.com.my/smarttrack/folders',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' },
+            data: toFormData(form)
+        });
+
+        $scope.form = {};
+        $state.go('tabsController.trackTrace');
     }
 
 }])
@@ -69,7 +75,6 @@ function ($scope, $stateParams, $http) {
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, $state, $q, $http, $filter) {
-    alert('refresh');
     $scope.categories = [];
     $scope.folders = [];
     $scope.tracklist = [];
@@ -163,7 +168,9 @@ function ($scope, $stateParams, $state, $q, $http, $filter) {
         }).error(function (err) {
             alert('error');
         });
-        $state.go('tabsController.trackTrace');
+
+        //$state.go('tabsController.trackTrace');
+        $state.go($state.current, {}, { reload: true });
     }
 
    
@@ -250,16 +257,16 @@ function ($scope, $http, $q, $stateParams, $state) {
         if ($stateParams != null) {
             if ($stateParams.id > 0) {
                 $http({
-                    method: "GET",
-                    url: "http://beta3.irealtor.api.iproperty.com.my/smarttrack/tracks/" + $stateParams.id,
-                    headers: { 'Content-Type': 'application/json' }
-                })
-               .success(function (response) {
-                   $scope.form = form;
-                   console.log("$scope.form : " + JSON.stringify(response));
-               }).error(function (err) {
-                   console.log("error: " + JSON.stringify(err));
-               })
+                        method: "GET",
+                        url: "http://beta3.irealtor.api.iproperty.com.my/smarttrack/tracks/" + $stateParams.id,
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                    .success(function(response) {
+                        $scope.form = response;
+                        console.log("$scope.form : " + JSON.stringify(response));
+                    }).error(function(err) {
+                        console.log("error: " + JSON.stringify(err));
+                    });
             }
         }
     });
