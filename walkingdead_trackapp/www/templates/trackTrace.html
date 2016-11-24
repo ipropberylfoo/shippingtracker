@@ -25,8 +25,8 @@
                 {{item.TrackStatus}}-->
                   <div class="flex-container wrap">
                       <div class="flex-div">
-                          <ion-label>{{item.Name}}&nbsp;&nbsp;{{item.TrackingNo}}</ion-label>
-                          <ion-label style="padding-top:0;color:red;">{{item.TrackStatus}}&nbsp;&nbsp;<a class="icon" ng-class="item.IsRead  ? ' ' : 'ion-android-star'"></a></ion-label>
+                          <a ui-sref="trackDetail({id:{{item.Id}}})"><ion-label>{{item.Name}}&nbsp;&nbsp;{{item.TrackingNo}}</ion-label></a>
+                          <ion-label style="padding-top:0;color:red;">{{item.TrackStatus}}&nbsp;&nbsp;<a class="icon" ng-class="{{item.IsRead}}==true  ? ' ' : 'ion-android-star'"></a></ion-label>
                       </div>
                       <div class="flex-div2">
 
