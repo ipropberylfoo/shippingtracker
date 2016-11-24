@@ -1,0 +1,221 @@
+<ion-view title="Track &amp; Trace" id="page4" >
+  <ion-content padding="true" class="has-header">
+    <div id="trackTrace-container1">
+      <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-android-add-circle"></a>
+      <a ui-sref="tabsController.addCategory" id="trackTrace-button5" class="button button-light  icon ion-folder"></a>
+      <!--<ion-refresher pulling-text="Pull to refresh"  ></ion-refresher>-->
+    </div>
+    <ion-list id="trackTrace-list2">
+ 
+        <div ng-repeat="group in categories">
+            <ion-item class="item-stable"
+                      ng-click="toggleGroup(group)"
+                      ng-class="{active: isGroupShown(group)}">
+                <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
+                &nbsp;
+                {{group.name}}
+            </ion-item>
+            <ion-item class="item-accordion"
+                      ng-repeat="item in group.items"
+                      ng-show="isGroupShown(group)">
+                <!--<ion-label >{{item.Name}}
+                    <a   id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-android-add-circle"></a>
+                </ion-label>
+                {{item.TrackStatus}}-->
+                
+                <div class="flex-container wrap">
+                    <div class="flex-div">
+                        <ion-label>{{item.Name}}&nbsp;&nbsp;{{item.TrackNo}}</ion-label>
+                        <ion-label style="padding-top:0;color:red;">{{item.TrackStatus}}</ion-label>
+                    </div>
+                    <div class="flex-div2">
+                       
+                        <a id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;min-width:30px;padding:0px;" class="button button-light  icon ion-android-delete" ng-click="delete({{item.Id}})">
+                        </a>
+                        <a ui-sref="editTrack({id:{{item.Id}}})" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px; min-width:30px;padding:0px;" class="button button-light  icon ion-edit"></a>
+                        <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px; min-width:30px;padding:0px;" class="button button-light  icon ion-ios-mic-outline" ng-click="mute({{item.Id}})"></a>
+                    </div>
+                    <!--<div class="column listlabel">{{item.Name}}&nbsp;&nbsp;{{item.TrackNo}}</div>
+                    <div class="column listbutton">
+                        <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-android-delete"></a>
+                    </div>
+                        <div class="column listbutton">
+                            <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-edit"></a>
+                        </div>
+                            <div class="column listbutton">
+                                <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-android-add-circle"></a>
+                            </div>
+                   <ion-label>{{item.TrackStatus}}&nbsp;</ion-label>-->
+                </div>
+            </ion-item>
+        </div>
+        
+
+
+       
+
+
+
+    </ion-list>
+  </ion-content>
+</ion-view>
+
+<style type="text/css">
+    .input-label {
+        font-size:14px !important;
+        padding:0 !important;
+    }
+    .list .item.item-accordion {
+        line-height: 38px;
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-right:0;
+        transition: 0.09s all linear;
+    }
+
+        .list .item.item-accordion.ng-hide {
+            line-height: 0px;
+        }
+
+        .list .item.item-accordion.ng-hide-add,
+        .list .item.item-accordion.ng-hide-remove {
+            display: block !important;
+        }
+
+ .flex-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    border: none;
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.wrap    {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+/*@media (max-width: 320px) {
+
+    .flex-container.wrap > div{
+        width: 50%;
+        max-width: 50%;
+        text-overflow: '';
+        white-space:nowrap;
+        overflow: hidden;
+    }
+
+}*/
+
+@media (min-width: 321px) {
+    .flex-container.wrap > div{
+        width: 15%;
+        max-width: 15%;
+        text-overflow: '';
+        white-space:nowrap;
+        overflow: hidden;
+    }
+
+     .flex-container.wrap > .listlabel{
+        width: 65%;
+        max-width: 65%;
+        text-overflow: '';
+        white-space:nowrap;
+        overflow: hidden;
+    }
+
+        .flex-container.wrap > .listbutton{
+        width: 10%;
+        max-width: 10%;
+        text-overflow: '';
+        white-space:nowrap;
+        overflow: hidden;
+    }
+
+          .flex-container.wrap > .flex-div{
+        width: 65%;
+        max-width: 65%;
+        text-overflow: '';
+        white-space:nowrap;
+        overflow: hidden;
+    }
+
+            .flex-container.wrap > .flex-div2{
+        width: 35%;
+        max-width: 35%;
+        text-overflow: '';
+        white-space:nowrap;
+        overflow: hidden;
+    }
+}
+
+/*@media (min-width: 480px) {
+    .flex-container.wrap > div{
+        width: 25%;
+        max-width: 25%;
+        text-overflow: '';
+        white-space:nowrap;
+        overflow: hidden;
+    }
+}
+
+@media (min-width: 640px) {
+    .flex-container.wrap > div{
+        width: 20%;
+        max-width: 20%;
+        text-overflow: '';
+        white-space:nowrap;
+        overflow: hidden;
+    }
+}
+
+@media (min-width: 960px) {
+    .flex-container.wrap > div{
+        width: 15%;
+        max-width: 15%;
+        text-overflow: '';
+        white-space:nowrap;
+        overflow: hidden;
+    }
+}*/
+
+.low-pad-item {
+    padding: 0;
+    margin: 0;
+}
+
+.col-header {
+    font-weight: bold;
+}
+
+.column {
+    text-overflow: '';
+    white-space:nowrap;
+    overflow: hidden;
+    max-width: 87%;
+    float: left;
+    /*padding: 2px 5px;*/
+}
+
+.col-header > .column {
+    padding: 5px 5px;
+}
+
+.underlined {
+    text-decoration: underline;
+}
+
+.column-sort {
+    min-width:13%;
+    float: right;
+    text-align: right;
+    padding-right: 2px;
+}
+
+</style>

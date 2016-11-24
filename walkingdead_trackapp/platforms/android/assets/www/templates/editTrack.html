@@ -1,0 +1,35 @@
+<ion-view title="Edit Track" id="page5">
+  <ion-content padding="true" class="has-header">
+      <form id="editTrack-form9" class="list" ng-controller="couriercontroller">
+          <label class="item item-input" id="editTrack-input7">
+              <span class="input-label">Name</span>              
+              <input type="text" ng-model="form.Name" placeholder="">
+          </label>
+          <br/>
+          <label class="item item-input" id="editTrack-input8">
+              <span class="input-label">Track No</span>
+              <input type="text" ng-model="form.TrackNo" placeholder="">
+          </label>
+          <br/>
+          <label class="item item-input" id="editTrack-input9">
+              <span class="input-label">Remark</span>
+              <input type="text" ng-model="form.Remark" placeholder="">
+          </label>
+          <br/>
+          <label class="item item-select" id="editTrack-select4">
+              <span class="input-label">Services</span>
+              <select ng-model="form.CompanyId">
+                  <option ng-repeat="courier in couriers" value="{{courier.Id}}">{{courier.CompanyName}}</option>
+              </select>
+          </label>
+          <br/>
+          <label class="item item-select" id="editTrack-select5">
+              <span class="input-label">Category</span>
+              <select ng-model="form.FolderId">
+                  <option ng-repeat="folder in folders" value="{{folder.Id}}">{{folder.Name}}</option>
+              </select>
+          </label>
+          <button id="editTrack-button2" class="button button-positive button-block" type="submit" ng-click="update(form)">Save Tracking</button>
+      </form>    
+  </ion-content>
+</ion-view>
