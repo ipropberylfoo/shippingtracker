@@ -1,4 +1,4 @@
-﻿﻿function toFormData(obj) {
+﻿﻿﻿function toFormData(obj) {
     var data = "";
 
     for (var prop in obj) {
@@ -71,18 +71,58 @@ function ($scope, $stateParams, $http) {
     });    
 }])
 
-.controller('trackTraceCtrl', ['$scope', '$stateParams', '$state', '$q', '$http', '$filter', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('trackTraceCtrl', ['$scope', '$stateParams', '$state', '$q', '$http', '$filter', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $state, $q, $http, $filter) {
+function ($scope, $stateParams, $state, $q, $http, $filter, $timeout) {
+
+    $scope.doRefresh = function (refreshgrp) {
+
+        //console.log('Refreshing!');
+        $scope.categories = [];
+        $scope.folders = [];
+        $scope.tracklist = [];
+
+        $timeout(function () {
+            $q.all([FolderDefer(), TrackDefer()]).then(function (result) {
+                $scope.folders = result[0];
+                $scope.tracklist = result[1];
+
+                for (var i = 0; i < $scope.folders.length; i++) {
+                    var folderList = $filter('filter')($scope.tracklist, { FolderId: $scope.folders[i].Id }, true)
+                   
+                    if (folderList != null) {
+                        $scope.categories[i] = {
+                            name: $scope.folders[i].Name,
+                            isread: $scope.folders[i].IsRead,
+                            items: []
+                        };
+                        for (var j = 0; j < folderList.length; j++) {
+                            $scope.categories[i].items.push(folderList[j]);
+                            console.log(JSON.stringify(folderList[j]));
+                        }
+                    }
+
+                }
+                $scope.$broadcast('scroll.refreshComplete');
+                if (refreshgrp != null) {
+                    var grpList = $filter('filter')($scope.categories, { name: refreshgrp.name }, true)
+                    $scope.toggleGroup(grpList[0]);
+                }
+            });
+           
+        }, 1000);
+    };
+
+    //alert('refresh');
     $scope.categories = [];
     $scope.folders = [];
     $scope.tracklist = [];
-        //[{ "Id": "1", "Name": "LeeYin", "CompanyId": "1", "TrackNo": "E1234567890MY", "IsMuteProcess": "0", "TrackStatus": "Delivering", "FolderId": 1 },
-        //    { "Id": "2", "Name": "Kok Eng", "CompanyId": "1", "TrackNo": "E1234567890SG", "IsMuteProcess": "0", "TrackStatus": "Delivered", "FolderId": 1 },
-        //    { "Id": "3", "Name": "Ken Ken", "CompanyId": "2", "TrackNo": "E1234567890ID", "IsMuteProcess": "0", "TrackStatus": "Delivering", "FolderId": 2 },
-        //    { "Id": "4", "Name": "Beryl Foo", "CompanyId": "1", "TrackNo": "E1234567890FR", "IsMuteProcess": "0", "TrackStatus": "Delivering", "FolderId": 3 }
-        //];
+    //[{ "Id": "1", "Name": "LeeYin", "CompanyId": "1", "TrackNo": "E1234567890MY", "IsMuteProcess": "0", "TrackStatus": "Delivering", "FolderId": 1 },
+    //    { "Id": "2", "Name": "Kok Eng", "CompanyId": "1", "TrackNo": "E1234567890SG", "IsMuteProcess": "0", "TrackStatus": "Delivered", "FolderId": 1 },
+    //    { "Id": "3", "Name": "Ken Ken", "CompanyId": "2", "TrackNo": "E1234567890ID", "IsMuteProcess": "0", "TrackStatus": "Delivering", "FolderId": 2 },
+    //    { "Id": "4", "Name": "Beryl Foo", "CompanyId": "1", "TrackNo": "E1234567890FR", "IsMuteProcess": "0", "TrackStatus": "Delivering", "FolderId": 3 }
+    //];
     function FolderDefer() {
         var q = $q.defer();
         $http({
@@ -120,60 +160,61 @@ function ($scope, $stateParams, $state, $q, $http, $filter) {
 
         return q.promise;
     }
-    $q.all([FolderDefer(), TrackDefer()]).then(function (result) {
-        $scope.folders = result[0];
-        $scope.tracklist = result[1];
+    $scope.doRefresh();
+    //$q.all([FolderDefer(), TrackDefer()]).then(function (result) {
+    //    $scope.folders = result[0];
+    //    $scope.tracklist = result[1];
 
-        for (var i = 0; i < $scope.folders.length; i++) {
-            var folderList = $filter('filter')($scope.tracklist, { FolderId: $scope.folders[i].Id }, true)
+    //    for (var i = 0; i < $scope.folders.length; i++) {
+    //        var folderList = $filter('filter')($scope.tracklist, { FolderId: $scope.folders[i].Id }, true)
 
-            if (folderList != null) {
-                $scope.categories[i] = {
-                    name: $scope.folders[i].Name,
-                    items: []
-                };
-                for (var j = 0; j < folderList.length; j++) {
-                    $scope.categories[i].items.push(folderList[j]);
-                    console.log(JSON.stringify(folderList[j]));
-                }
-            }
+    //        if (folderList != null) {
+    //            $scope.categories[i] = {
+    //                name: $scope.folders[i].Name,
+    //                items: []
+    //            };
+    //            for (var j = 0; j < folderList.length; j++) {
+    //                $scope.categories[i].items.push(folderList[j]);
+    //                console.log(JSON.stringify(folderList[j]));
+    //            }
+    //        }
 
-        }
-    });
+    //    }
+    //});
 
-    $scope.delete = function (id) {
+    $scope.delete = function (id, group) {
         var track = $filter('filter')($scope.tracklist, { Id: id }, true)
-        //track[0].
-        //$http.post('/smarttrack/tracks', data).then(function (response) {
-        //    $state.go('tabsController.trackTrace');
-        //})
+        track[0].IsMuteAll = !(track[0].IsMuteAll);
 
+        $http({
+            method: "POST",
+            url: "http://beta3.irealtor.api.iproperty.com.my/smarttrack/tracks/delete/" + id,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' }
+        }).success(function (response) {
+            $scope.doRefresh(group);
+
+        }).error(function (err) {
+            alert('delete error');
+        });
     }
-    $scope.mute = function (id) {
-       // alert('come to mute');
+
+    $scope.mute = function (id, group) {
+
         var track = $filter('filter')($scope.tracklist, { Id: id }, true)
-      //  alert(track[0].IsMuteAll);
-        track[0].IsMuteAll = 1; // !(track[0].IsMuteAll);
-        track[0].Remark = 'update here';
-      //  alert(track[0].IsMuteAll);
-      //  alert(track[0].Remark);
-       // alert(id);
+        track[0].IsMuteAll = !(track[0].IsMuteAll);
+       
         $http({
             method: "POST",
             url: "http://beta3.irealtor.api.iproperty.com.my/smarttrack/tracks/" + id,
             headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' },
             data: toFormData(track[0])
         }).success(function (response) {
-            alert('success');
+            $scope.doRefresh(group);
+            $scope.shownGroup = null;
         }).error(function (err) {
-            alert('error');
+            alert('delete error');
         });
-
-        //$state.go('tabsController.trackTrace');
-        $state.go($state.current, {}, { reload: true });
     }
-
-   
 
     /*
      * if given group is the selected group, deselect it
@@ -217,7 +258,7 @@ function ($scope, $http, $q, $stateParams, $state) {
         $http({
             method: "GET",
             url: "http://beta3.irealtor.api.iproperty.com.my/smarttrack/folders",
-            headers: { 'Content-Type': 'application/json' }            
+            headers: { 'Content-Type': 'application/json' }
         })
         .success(function (response) {
             q.resolve(response);
@@ -228,7 +269,7 @@ function ($scope, $http, $q, $stateParams, $state) {
             console.log(response);
             console.log("error: " + JSON.stringify(err));
         })
-    
+
         return q.promise;
     }
 
@@ -237,7 +278,7 @@ function ($scope, $http, $q, $stateParams, $state) {
         $http({
             method: "GET",
             url: "http://beta3.irealtor.api.iproperty.com.my/smarttrack/couriers",
-            headers: { 'Content-Type': 'application/json' }            
+            headers: { 'Content-Type': 'application/json' }
         })
         .success(function (response) {
             q.resolve(response);
@@ -293,5 +334,6 @@ function ($scope, $http, $q, $stateParams, $state) {
         });
 
         $state.go('tabsController.trackTrace');        
-    }     
+    }
+
 }]);

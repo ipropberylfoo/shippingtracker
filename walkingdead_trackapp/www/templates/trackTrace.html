@@ -1,62 +1,60 @@
 <ion-view title="Track &amp; Trace" id="page4" >
   <ion-content padding="true" class="has-header">
+      <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()"></ion-refresher>
     <div id="trackTrace-container1">
       <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-android-add-circle"></a>
       <a ui-sref="tabsController.addCategory" id="trackTrace-button5" class="button button-light  icon ion-folder"></a>
-      <!--<ion-refresher pulling-text="Pull to refresh"  ></ion-refresher>-->
     </div>
-    <ion-list id="trackTrace-list2">
- 
-        <div ng-repeat="group in categories">
-            <ion-item class="item-stable"
-                      ng-click="toggleGroup(group)"
-                      ng-class="{active: isGroupShown(group)}">
-                <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
-                &nbsp;
-                {{group.name}}
-            </ion-item>
-            <ion-item class="item-accordion"
-                      ng-repeat="item in group.items"
-                      ng-show="isGroupShown(group)">
-                <!--<ion-label >{{item.Name}}
+      <ion-list id="trackTrace-list2">
+
+          <div ng-repeat="group in categories">
+              <ion-item class="item-stable"
+                        ng-click="toggleGroup(group)"
+                        ng-class="{active: isGroupShown(group)}">
+                  <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
+                  &nbsp;
+                  {{group.name}}
+                  <i class="icon" ng-class="group.isread  ? ' ' : 'ion-android-star'"></i>
+              </ion-item>
+              <ion-item class="item-accordion"
+                        ng-repeat="item in group.items"
+                        ng-show="isGroupShown(group)">
+                  <!--<ion-label >{{item.Name}}
                     <a   id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-android-add-circle"></a>
                 </ion-label>
                 {{item.TrackStatus}}-->
-                
-                <div class="flex-container wrap">
-                    <div class="flex-div">
-                        <ion-label>{{item.Name}}&nbsp;&nbsp;{{item.TrackNo}}</ion-label>
-                        <ion-label style="padding-top:0;color:red;">{{item.TrackStatus}}</ion-label>
-                    </div>
-                    <div class="flex-div2">
-                       
-                        <a id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;min-width:30px;padding:0px;" class="button button-light  icon ion-android-delete" ng-click="delete({{item.Id}})">
-                        </a>
-                        <a ui-sref="editTrack({id:{{item.Id}}})" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px; min-width:30px;padding:0px;" class="button button-light  icon ion-edit"></a>
-                        <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px; min-width:30px;padding:0px;" class="button button-light  icon ion-ios-mic-outline" ng-click="mute({{item.Id}})"></a>
-                    </div>
-                    <!--<div class="column listlabel">{{item.Name}}&nbsp;&nbsp;{{item.TrackNo}}</div>
-                    <div class="column listbutton">
-                        <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-android-delete"></a>
-                    </div>
-                        <div class="column listbutton">
-                            <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-edit"></a>
-                        </div>
+                  <div class="flex-container wrap">
+                      <div class="flex-div">
+                          <ion-label>{{item.Name}}&nbsp;&nbsp;{{item.TrackingNo}}</ion-label>
+                          <ion-label style="padding-top:0;color:red;">{{item.TrackStatus}}&nbsp;&nbsp;<a class="icon" ng-class="item.IsRead  ? ' ' : 'ion-android-star'"></a></ion-label>
+                      </div>
+                      <div class="flex-div2">
+
+                          <a id="trackTrace-button5" style="border-radius:1px 1px 1px 1px;min-width:30px;padding:0px;" class="button button-light  icon ion-android-delete" ng-click="delete({{item.Id}})">
+                          </a>
+                          <a ui-sref="editTrack({id:{{item.Id}}})" id="trackTrace-button5" style="border-radius:1px 1px 1px 1px; min-width:30px;padding:0px;" class="button button-light  icon ion-edit"></a>
+                          <a ui-sref="" id="trackTrace-button7" style="border-radius:1px 1px 1px 1px; min-width:30px;padding:0px;" ng-class="{{item.IsMuteAll}}==true ? 'button button-light  icon ion-ios-mic-off' : 'button button-light  icon ion-ios-mic-outline'" ng-click="mute({{item.Id}}, group)"></a>
+                      </div>
+                      <!--<div class="column listlabel">{{item.Name}}&nbsp;&nbsp;{{item.TrackNo}}</div>
                             <div class="column listbutton">
-                                <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-android-add-circle"></a>
+                                <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-android-delete"></a>
                             </div>
-                   <ion-label>{{item.TrackStatus}}&nbsp;</ion-label>-->
-                </div>
-            </ion-item>
-        </div>
-        
+                                <div class="column listbutton">
+                                    <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-edit"></a>
+                                </div>
+                                    <div c
+                    </ion-item>lass="column listbutton">
+                                        <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-android-add-circle"></a>
+                                    </div>
+                           <ion-label>{{item.TrackStatus}}&nbsp;</ion-label>-->
+                  </div>
+              </ion-item>
+          </div>
 
 
-       
 
 
-
-    </ion-list>
+      </ion-list>
   </ion-content>
 </ion-view>
 
@@ -217,5 +215,6 @@
     text-align: right;
     padding-right: 2px;
 }
+
 
 </style>
