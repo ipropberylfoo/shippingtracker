@@ -1,4 +1,4 @@
-<ion-view title="Track &amp; Trace" id="page4">
+<ion-view title="Track &amp; Trace" id="page4" >
   <ion-content padding="true" class="has-header">
     <div id="trackTrace-container1">
       <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;" class="button button-light  icon ion-android-add-circle"></a>
@@ -32,7 +32,7 @@
                        
                         <a id="trackTrace-button4" style="border-radius:1px 1px 1px 1px;min-width:30px;padding:0px;" class="button button-light  icon ion-android-delete" ng-click="delete({{item.Id}})">
                         </a>
-                        <a ui-sref="tabsController.editTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px; min-width:30px;padding:0px;" class="button button-light  icon ion-edit"></a>
+                        <a ui-sref="editTrack({id:{{item.Id}}})" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px; min-width:30px;padding:0px;" class="button button-light  icon ion-edit"></a>
                         <a ui-sref="tabsController.addTrack" id="trackTrace-button4" style="border-radius:1px 1px 1px 1px; min-width:30px;padding:0px;" class="button button-light  icon ion-ios-mic-outline" ng-click="mute({{item.Id}})"></a>
                     </div>
                     <!--<div class="column listlabel">{{item.Name}}&nbsp;&nbsp;{{item.TrackNo}}</div>
