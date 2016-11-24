@@ -13,19 +13,19 @@
         <br />
       <label class="item item-input" id="editTrack-input9">
         <span class="input-label">Remark</span>
-        <input type="text" data-ng-model="form.trackRemark" placeholder="">
+        <input type="text" data-ng-model="form.remark" placeholder="">
       </label>
         <br />    
       <label class="item item-select" id="editTrack-select4">
         <span class="input-label">Services</span>
-          <select data-ng-model="form.courier">
+          <select data-ng-model="form.companyId">
               <option ng-repeat="courier in couriers" value="{{courier.Id}}">{{courier.CompanyName}}</option>
           </select>
       </label>
         <br />
       <label class="item item-select" id="editTrack-select5">
         <span class="input-label">Category</span>
-          <select data-ng-model="form.folder">
+          <select data-ng-model="form.folderId">
               <option ng-repeat="folder in folders" value="{{folder.Id}}">{{folder.Name}}</option>
           </select>
       </label>

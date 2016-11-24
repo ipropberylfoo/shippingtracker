@@ -1,4 +1,15 @@
-﻿angular.module('app.controllers', [])
+﻿function toFormData(obj) {
+    var data = "";
+
+    for (var prop in obj) {
+        data = data + prop + '=' + obj[prop] + '&';
+    }
+
+    return data;
+}
+
+
+angular.module('app.controllers', [])
 
 .controller('trackDetailCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
@@ -202,18 +213,26 @@ function ($scope, $http, $q, $stateParams, $state) {
     });
 
     $scope.create = function (form) {
-                
 
-        $http.post('http://beta3.irealtor.api.iproperty.com.my/smarttrack/tracks', data).then(function (response) {
-            $state.go('tabsController.trackTrace');
-        })
+        $http({
+            method: "POST",
+            url: "http://beta3.irealtor.api.iproperty.com.my/smarttrack/tracks",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' },
+            data: toFormData(form)
+        });
 
+        $state.go('tabsController.trackTrace');
     }
 
     $scope.update = function (form) {        
-        
-        $http.post('http://beta3.irealtor.api.iproperty.com.my/smarttrack/tracks/' + $stateParams.id, data).then(function (response) {
-            $state.go('tabsController.trackTrace');
-        })
+
+        $http({
+            method: "POST",
+            url: 'http://beta3.irealtor.api.iproperty.com.my/smarttrack/tracks/' + $stateParams.id,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' },
+            data: toFormData(form)
+        });
+
+        $state.go('tabsController.trackTrace');        
     }     
 }]);
