@@ -6,7 +6,17 @@
 angular.module('smarttracker', ['ionic', 'app.controllers', 'app.routes', 'app.directives', 'app.services', ])
 
 .run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
+    $ionicPlatform.ready(function () {
+
+        var notificationOpenedCallback = function (jsonData) {
+            console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+        };
+
+        window.plugins.OneSignal
+          .startInit("fd91dd51-d692-4b24-8313-6b8154eb00d9", "83290318123")
+          .handleNotificationOpened(notificationOpenedCallback)
+          .endInit();
+
     if (cordova.platformId === "ios" && window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
