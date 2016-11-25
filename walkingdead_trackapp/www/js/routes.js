@@ -67,7 +67,6 @@
                     }
                 }
             })
-
             .state('archieved', {
                 url: '/page7',
                 templateUrl: 'templates/archieved.html',
@@ -77,9 +76,9 @@
                 url: '/page1',
                 templateUrl: 'templates/tabsController.html',
                 abstract: true
-    })
+            });
 
-    $urlRouterProvider.otherwise('/page4')
+        $urlRouterProvider.otherwise('/page1/page4');
 
 
     });
